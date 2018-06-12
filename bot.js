@@ -10,7 +10,7 @@ bot.on('ready', () =>
 
 bot.on('messageCreate', (msg) => 
 {
-    if(msg.content === 'cat')
+    if (msg.content === 'cat')
         bot.createMessage(msg.channel.id, 'girl');
 });
 
