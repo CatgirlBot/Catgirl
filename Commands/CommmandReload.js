@@ -19,8 +19,9 @@ class CommandReload extends BaseCommand
             return;
         }
         
-        const oldCommand = ctx.bot.commands.find(x => x.name.toUpperCase() !== args[0]);
-        ctx.bot.commands = ctx.bot.commands.filter(x => x.name.toUpperCase() !== args[0]);
+        const oldCommand = ctx.bot.commands.find(x => x.name.toUpperCase() === args[0].toUpperCase());
+        ctx.bot.commands = ctx.bot.commands.filter(x => x.name.toUpperCase() !== args[0].toUpperCase());
+
         let cmdInstance = null;
         const files = fs.readdirSync('./Commands');
 
