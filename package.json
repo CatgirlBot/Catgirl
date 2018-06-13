@@ -1,0 +1,28 @@
+{
+  "name": "catgirl-bot",
+  "version": "0.0.1",
+  "description": "A catgirl bot for Discord.",
+  "main": "bot.js",
+  "dependencies": {
+    "eris": "^0.8.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CatgirlBot/Catgirl.git"
+  },
+  "keywords": [
+    "catgirl",
+    "bot",
+    "discord"
+  ],
+  "author": "meme",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/CatgirlBot/Catgirl/issues"
+  },
+  "homepage": "https://github.com/CatgirlBot/Catgirl#readme"
+}
