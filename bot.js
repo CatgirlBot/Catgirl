@@ -51,7 +51,7 @@ class Catgirl
     {
         let content = msg.content;
 
-        if (!content.startsWith(this.config.prefix))
+        if (!content.startsWith(this.config.prefix) || msg.author.bot)
             return;
 
         let args = content.trim().split(' ');
