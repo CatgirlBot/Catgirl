@@ -8,7 +8,7 @@ class BaseCommand
         // Overrides for default cooldown can be done if desired
         this.name = name;
         this.description = description;
-        this.synax = syntax;
+        this.syntax = syntax;
 
         this.cooldown = 3;
         this.isOwner = false;
