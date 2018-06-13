@@ -13,7 +13,7 @@ class CommandContext
         this.bot = bot;
     }
 
-    reply(text, embed)
+    async reply(text, embed)
     {
         let content = 
         {
@@ -25,10 +25,10 @@ class CommandContext
         if (typeof embed !== undefined)
             content.embed = embed
 
-        this.client.createMessage(this.channel.id, content);
+        await this.client.createMessage(this.channel.id, content);
     }
 
-    replyEmbed(embed) { this.reply('', embed); }
+    async replyEmbed(embed) { await this.reply('', embed); }
 }
 
 module.exports = CommandContext

@@ -3,10 +3,10 @@ const fs = require('fs');
 
 class Catgirl
 {
-    constructor (config, commandDirectory)
+    constructor (options, config, commandDirectory)
     {
 		this.config = config;
-		this.client = new Eris(this.config.token);
+		this.client = new Eris(this.config.token, options);
         this.commands = [];
 
         fs.readdir(commandDirectory, (err, files) => 
@@ -65,5 +65,13 @@ class Catgirl
     start() { this.client.connect(); }
 }
 
-let catgirl = new Catgirl(require('./config'), './Commands/');
+const options =
+{
+    disableEveryone: true,
+    guildCreateTimeout: 5000,
+    defaultImageFormat: 'png',
+    defaultImageSize: 256
+}
+
+let catgirl = new Catgirl(options, require('./config'), './Commands/');
 catgirl.start();

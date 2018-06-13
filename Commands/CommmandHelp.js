@@ -2,16 +2,16 @@ const BaseCommand = require('../Structures/BaseCommand.js');
 
 class CommandHelp extends BaseCommand
 {
-    constructor() { super('help', 'The help command.'); this.cooldown = 10; }
+    constructor() { super('help', 'The help command.', 'help'); this.cooldown = 10; }
 
-    invoke(ctx, args)
+    async invoke(ctx, args)
     {
         let fields = []
 
         ctx.bot.commands.forEach(x => fields.push(
         {
             name: ctx.bot.config.prefix + x.name,
-            value: x.description,
+            value: `Description: ${x.description}\nSyntax: ${ctx.bot.config.prefix + x.syntax}`,
             inline: false
         }
         ));
@@ -23,7 +23,7 @@ class CommandHelp extends BaseCommand
             fields: fields
         }
 
-        ctx.replyEmbed(embed);
+        await ctx.replyEmbed(embed);
     }
 }
 
