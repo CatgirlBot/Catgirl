@@ -14,8 +14,9 @@ class BaseCommand
     // To be implemented in subclasses
     invoke(ctx, args) { }
     
-    invokeInternal(message, client, bot, args)
+    invokeInternal(message, bot, args)
     {
+        let client = bot.client;
         let ctx = new CommandContext(message, client, bot);
         let user = message.author;
 

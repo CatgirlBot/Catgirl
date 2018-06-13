@@ -26,25 +26,35 @@ class Catgirl
             });
         });
 
-        this.client.on('ready', () => 
+        let funcs = Object.getOwnPropertyNames(Reflect.getPrototypeOf(this)).filter(x => x.startsWith('event_'));
+
+        funcs.forEach(x => 
         {
-            console.log('Ready');
+            let eventName = x.substring('event_'.length);
+            console.log(`Assigning event "${eventName}" to function "${x}"`)
+            if (typeof this[x] == 'function')
+                this.client.on(eventName, this[x].bind(this));
         });
+    }
 
-        this.client.on('messageCreate', (msg) => 
-        {
-            let content = msg.content;
+    event_ready()
+    {
+        console.log('Ready');
+    }
 
-            if (!content.startsWith(this.config.prefix))
-                return;
+    event_messageCreate(msg)
+    {
+        let content = msg.content;
 
-            let args = content.trim().split(' ');
-            let command = args.shift().substring(this.config.prefix.length);
-            let cmd = this.commands.find(x => x.name.toUpperCase() == command.toUpperCase());
+        if (!content.startsWith(this.config.prefix))
+            return;
 
-            if (cmd)
-                cmd.invokeInternal(msg, this.client, this, args);
-        });
+        let args = content.trim().split(' ');
+        let command = args.shift().substring(this.config.prefix.length);
+        let cmd = this.commands.find(x => x.name.toUpperCase() == command.toUpperCase());
+
+        if (cmd)
+            cmd.invokeInternal(msg, this, args);
     }
 
     start() { this.client.connect(); }

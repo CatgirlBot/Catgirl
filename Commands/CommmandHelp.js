@@ -9,11 +9,11 @@ class CommandHelp extends BaseCommand
         let fields = []
 
         ctx.bot.commands.forEach(x => fields.push(
-            {
-                name: ctx.bot.config.prefix + x.name,
-                value: x.description,
-                inline: false
-            }
+        {
+            name: ctx.bot.config.prefix + x.name,
+            value: x.description,
+            inline: false
+        }
         ));
 
         let embed = 
