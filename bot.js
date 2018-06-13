@@ -5,8 +5,8 @@ class Catgirl
 {
     constructor (config, commandDirectory)
     {
-        this.config = config;
-        this.client = new Eris(this.config.token);
+		this.config = config;
+		this.client = new Eris(this.config.token);
         this.commands = [];
 
         fs.readdir(commandDirectory, (err, files) => 

@@ -28,18 +28,7 @@ class CommandContext
         this.client.createMessage(this.channel.id, content);
     }
 
-    replyEmbed(embed)
-    {
-        let content = 
-        {
-            content: '',
-            tts: false,
-            disableEveryone: true,
-            embed: embed
-        }
-
-        this.client.createMessage(this.channel.id, content);
-    }
+    replyEmbed(embed) { this.reply('', embed); }
 }
 
 module.exports = CommandContext
