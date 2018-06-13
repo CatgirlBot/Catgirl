@@ -2,13 +2,14 @@ const Eris = require('eris');
 
 class CommandContext
 {
-    constructor (message, bot)
+    constructor (message, client, bot)
     {
         this.message = message;
         this.messageContent = message.content;
         this.author = message.author;
         this.channel = message.channel;
         this.guild = message.channel instanceof Eris.TextChannel ? message.channel.guild : null;
+        this.client = client;
         this.bot = bot;
     }
 
@@ -24,7 +25,7 @@ class CommandContext
         if (typeof embed !== undefined)
             content.embed = embed
 
-        this.bot.createMessage(this.channel.id, content);
+        this.client.createMessage(this.channel.id, content);
     }
 
     replyEmbed(embed)
@@ -37,7 +38,7 @@ class CommandContext
             embed: embed
         }
 
-        this.bot.createMessage(this.channel.id, content);
+        this.client.createMessage(this.channel.id, content);
     }
 }
 

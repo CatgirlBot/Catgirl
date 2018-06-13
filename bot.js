@@ -1,44 +1,54 @@
 const Eris = require('eris');
-const Config = require('./config.json');
+require('./config.json');
 const fs = require('fs');
 
-var bot = new Eris(Config.token);
-var commands = [];
-
-fs.readdir("./Commands/", (err, files) => 
+class Catgirl
 {
-    if (err)
+    constructor (config, commandDirectory)
     {
-        console.log(err);
-        return;
+        this.config = config;
+        this.client = new Eris(this.config.token);
+        this.commands = [];
+
+        fs.readdir(commandDirectory, (err, files) => 
+        {
+            if (err) 
+            {
+                console.log(err);
+                return;
+            }
+
+            files.forEach(x => 
+            {
+                let cmdInstance = new (require(commandDirectory + x))();
+                console.log('Loaded command: ' + cmdInstance.name);
+                this.commands.push(cmdInstance);
+            });
+        });
+
+        this.client.on('ready', () => 
+        {
+            console.log('Ready');
+        });
+
+        this.client.on('messageCreate', (msg) => 
+        {
+            let content = msg.content;
+
+            if (!content.startsWith(this.config.prefix))
+                return;
+
+            let args = content.trim().split(' ');
+            let command = args.shift().substring(this.config.prefix.length);
+            let cmd = this.commands.find(x => x.name.toUpperCase() == command.toUpperCase());
+
+            if (cmd)
+                cmd.invokeInternal(msg, this.client, this, args);
+        });
     }
 
-    files.forEach(x => 
-    {
-        let cmdInstance = new (require('./Commands/' + x))();
-        console.log('Loaded command: ' + cmdInstance.name);
-        commands.push(cmdInstance);
-    });
-});
+    start() { this.client.connect(); }
+}
 
-bot.on('ready', () => 
-{
-    console.log('Ready');
-});
-
-bot.on('messageCreate', (msg) => 
-{
-    let content = msg.content;
-
-    if (!content.startsWith(Config.prefix))
-        return;
-    
-    let args = content.trim().split(' ');
-    let command = args.shift().substring(Config.prefix.length);
-    let cmd = commands.find(x => x.name.toUpperCase() == command.toUpperCase());
-
-    if (cmd)
-        cmd.invokeInternal(msg, bot, args);
-});
-
-bot.connect();
+let catgirl = new Catgirl(require('./config'), './Commands/');
+catgirl.start();

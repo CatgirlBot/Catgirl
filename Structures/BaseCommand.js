@@ -14,9 +14,9 @@ class BaseCommand
     // To be implemented in subclasses
     invoke(ctx, args) { }
     
-    invokeInternal(message, bot, args)
+    invokeInternal(message, client, bot, args)
     {
-        let ctx = new CommandContext(message, bot);
+        let ctx = new CommandContext(message, client, bot);
         let user = message.author;
 
         if (user.id in this.cooldowns && Date.now() - this.cooldowns[user.id] < this.cooldown * 1000)
