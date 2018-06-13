@@ -1,5 +1,4 @@
 const Eris = require('eris');
-require('./config.json');
 const fs = require('fs');
 
 class Catgirl
@@ -20,9 +19,15 @@ class Catgirl
 
             files.forEach(x => 
             {
-                let cmdInstance = new (require(commandDirectory + x))();
-                console.log('Loaded command: ' + cmdInstance.name);
-                this.commands.push(cmdInstance);
+                let cmdInstance = null;
+                try { cmdInstance = new (require(commandDirectory + x))(); }
+                catch (e) { console.log('Failed to load command: ' + x); console.log(e); }
+                
+                if (cmdInstance)
+                {
+                    this.commands.push(cmdInstance);
+                    console.log('Loaded command: ' + cmdInstance.name);
+                }
             });
         });
 
