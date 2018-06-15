@@ -1,13 +1,15 @@
 const Eris = require('eris');
 const fs = require('fs');
+const DatabaseHandler = require('./DatabaseHandler.js');
 
 class Catgirl
 {
-    constructor (options, config, commandDirectory)
+    constructor (options, config, commandDirectory, dbConnectionString)
     {
 		this.config = config;
 		this.client = new Eris(this.config.token, options);
         this.commands = [];
+        this.db = new DatabaseHandler(dbConnectionString);
 
         fs.readdir(commandDirectory, (err, files) => 
         {
@@ -73,5 +75,5 @@ const options =
     defaultImageSize: 256
 }
 
-let catgirl = new Catgirl(options, require('./config'), './Commands/');
+let catgirl = new Catgirl(options, require('./config'), './Commands/', 'mongodb://localhost/database');
 catgirl.start();

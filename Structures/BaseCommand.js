@@ -5,7 +5,7 @@ class BaseCommand
     constructor (name, description, syntax)
     {
         // All subclasses (commands) should call super(name, description, syntax)
-        // Overrides for default cooldown can be done if desired
+        // Overrides for default cooldown and other properties can be done if desired
         this.name = name;
         this.description = description;
         this.syntax = syntax;
@@ -41,7 +41,7 @@ class BaseCommand
 
     async handleError(ctx, error)
     {
-        try {await ctx.reply('An error popped up. Try the command again. If it doesn\'t work, you should probably report this to a bot dev.'); }
+        try { await ctx.reply('An error popped up. Try the command again. If it doesn\'t work, you should probably report this to a bot dev.'); }
         catch (e) { return; }
         console.log(`[${new Date()}] ${error}`);
     }
